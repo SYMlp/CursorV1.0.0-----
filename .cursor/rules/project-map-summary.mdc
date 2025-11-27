@@ -1,0 +1,29 @@
+---
+description: 模板项目全局结构简图 (Mini-Map)。提供本模板工厂的核心目录职责指引。
+globs: **/*
+alwaysApply: true
+---
+# 🗺️ 模板项目全局简图 (Mini-Map)
+
+## 🚀 触发场景 (Triggers)
+*   **Trigger 1**: 当用户询问 "**项目结构**"、"**某文件在哪里**" 或 "**这是做什么的**" 时。
+*   **Trigger 2**: 当你准备进行 **架构变更** 或 **添加新模块** 时。
+*   **Action**: 必须优先查阅本简图，或读取 `read_file _meta/docs/模板项目地图.md` 获取详细拓扑。
+
+## 核心结构
+- `prompts-library/`: **核心资产** (交付给用户的 Prompt 模板)
+  - `templates/capabilities/`: **原子能力**
+  - `templates/patterns/`: **协作模式** (如虚拟团队)
+- `_meta/`: **维护工具** (工厂自身的运维工具，**不**复制到新项目)
+  - `prompts/ops/`: **运维元角色** (MapUpdater, PromptExtractor, RuleChecker, VersionBumper)
+- `.cursor/rules/`: **运行时** (AI 行为准则)
+- `tasks/`: **任务追踪** (工作流状态记录)
+- `generate-project.ps1`: **启动器** (新项目生成脚本)
+
+## 关键文档指引
+- 详细架构与数据流: 📜 `read_file _meta/docs/模板项目地图.md`
+- 版本控制策略: 📜 `read_file _meta/docs/versioning-policy.md`
+
+## 核心原则
+- **隔离原则**: `_meta` 目录下的工具仅用于维护本模板项目，严禁混入用户的新项目中。
+- **结构化交付**: 所有能力必须原子化封装在 `capabilities` 中，通过 `patterns` 进行组装。

@@ -18,7 +18,7 @@
 
 .EXAMPLE
     .\generate-project.ps1 -ProjectName "MyNewWebApp"
-    #>
+#>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory=$true)]
@@ -47,7 +47,7 @@ try {
     Write-Host "新项目路径: $newProjectPath"
     Write-Host "开始创建新项目 '$ProjectName'..."
 
-    # 定义需要排除的文件和目录列表
+    # 定义需要排除的文件和目录列表 (这些是模板自身的维护工具，不应带入新项目)
     $excludeList = @(
         "_meta",
         ".git",
@@ -65,7 +65,25 @@ try {
     foreach ($item in $itemsToCopy) {
         $sourceItemPath = $item.FullName
         $destinationItemPath = Join-Path -Path $newProjectPath -ChildPath $item.Name
+        
         Copy-Item -Path $sourceItemPath -Destination $destinationItemPath -Recurse
+    }
+
+    # --- 核心修正: 清理不需要的规则文件 ---
+    # 1. 删除 project-map-summary.mdc (模板母版的简图，新项目应生成自己的地图)
+    # 2. 删除 template-maintenance-mode.mdc (模板维护模式，新项目不需要维护模板自身)
+    
+    $rulesToRemove = @(
+        ".cursor/rules/project-map-summary.mdc",
+        ".cursor/rules/template-maintenance-mode.mdc"
+    )
+
+    foreach ($ruleFile in $rulesToRemove) {
+        $fullPath = Join-Path -Path $newProjectPath -ChildPath $ruleFile
+        if (Test-Path $fullPath) {
+            Remove-Item -Path $fullPath -Force
+            Write-Host "已移除母版专用规则: $ruleFile" -ForegroundColor Gray
+        }
     }
 
     Write-Host ""

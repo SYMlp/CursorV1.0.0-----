@@ -1,0 +1,16 @@
+# Version Control
+.git
+.gitignore
+.gitattributes
+
+# Cursor IDE
+.cursor
+
+# Output directories (if any)
+output/
+*.log
+
+# System
+.DS_Store
+Thumbs.db
+

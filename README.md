@@ -27,7 +27,11 @@
 
 ### 2. 模板维护者工具 (`_meta`)
 这些是用于维护本母版项目自身的工具，**不会**被复制到新项目中。
-*   `./_meta/prompts/`: 存放协助维护本项目的 AI 角色（如“图书管理员 Librarian”）。
+*   `./_meta/prompts/ops/`: **运维元角色团队**。
+    *   `prompt-extractor.md`: **提示词提取与拆解**。从成品中逆向提取模板。
+    *   `map-updater.md`: **项目地图同步**。维护 README 与地图的一致性。
+    *   `rule-checker.md`: **规则冲突检测**。审核 .cursor/rules 的完整性。
+    *   `version-bumper.md`: **版本发布管理**。管理语义化版本与 CHANGELOG。
 *   `./_meta/docs/`: 存放本项目的演进历史和设计文档。
 
 ### 3. 项目基础设施
