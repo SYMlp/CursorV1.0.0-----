@@ -1,76 +1,54 @@
 ---
+description: Project Collaboration Playbook - Defines the project lifecycle as a State Machine.
+globs: "**/*"
 alwaysApply: true
 ---
 
-# 项目协作剧本 (Collaboration Playbook) V3.3
+# Project Collaboration Playbook (V4.0 - Prometheus Edition)
 
-**关联规则**: `01-project-rules.mdc`
+This document defines the **Project Lifecycle State Machine**.
+The AI must explicitly identify the current state and execute the corresponding protocol.
 
-**设定日期**: 2025-06-10
+## 🔄 State Machine Definitions
 
----
+### 🟢 State 1: Bootstrapping (Initialization)
+**Trigger**: New project start, or significant architecture overhaul.
+**Protocol**:
+1.  **Goal Definition**: User states the "North Star" goal.
+2.  **Framework Check**: AI verifies existence of `src`, `docs`, `tasks`, `.cursor/rules`.
+3.  **Map Creation**: AI generates `docs/project-map.md` (Detailed) and `.cursor/rules/project-map-summary.mdc` (Summary).
+4.  **Exit Condition**: User confirms the initial map and structure.
 
-## 🎯 核心原则 (Guiding Principles)
+### 🔵 State 2: Development (Agile Loop)
+**Trigger**: Routine feature development or tasks.
+**Protocol**:
+1.  **Task Definition**: User defines a task.
+2.  **Plan `<thinking>`**: AI breaks down task, updates `tasks/[TODO]...`.
+3.  **Execution**: AI modifies code/docs.
+4.  **Verification**: AI runs lints/tests.
+5.  **Exit Condition**: Task marked as `[DONE]`.
 
-1.  **结构化思维 (Structured Thinking)**: 我们的一切协作都基于"结构化"。项目有结构 (`src`, `data`, `docs`, `tasks`, `.cursor/rules`), 思考有结构 (`docs`), 任务有结构 (`tasks`), 协作本身也有结构 (本剧本)。
-2.  **明确意图 (Clear Intent)**: 您作为"指挥官"，需要清晰地表达您的战略意图 (Goal & Why)。我作为"执行官"，需要将意图转述并拆解为可执行的战术 (Plan & How)。
-3.  **持续迭代 (Continuous Iteration)**: 没有什么是完美的。我们的代码、文档、乃至这套协作方法本身，都处在持续的审查和优化中。
-4.  **动态数据原则 (Dynamic Data Principle)**: 当需要任何具有时效性或来自外部世界的信息（如当前日期、API 状态）时，AI 必须优先使用可用的工具（如 MCP）进行主动获取，而不是依赖静态的、硬编码在规则中的信息。在工具调用失败时，AI 必须立刻向用户报告并请求人工输入作为后备方案。
-
----
-
-## 阶段 0: 项目启动规程 (Project Bootstrap Protocol)
-
-**Trigger (触发时机)**: 当开启一个**新项目**或**新阶段**时。
-
-**Action (执行动作)**: 严格遵循以下步骤：
-
-1.  **用户定义目标 (User Defines Goal)**: 您用一两句话清晰地描述项目的最终目标和背景。
-2.  **AI 框架自检与补全 (AI Framework Check & Fill)**: 我理解目标后，自动执行以下检查：
-    - 检查 `./src`, `./data`, `./docs`, `./tasks`, `./.cursor/rules` 是否存在。如果缺失，立即创建。
-    - 检查核心规则 (`01-project-rules.mdc`, `02-project-playbook.mdc`) 是否最新。
-3.  **AI 初始化地图 (AI Initializes Map)**: **即使框架已存在，我也必须检查地图**:
-    - 如果 `docs/项目导航地图.md` 缺失或为空，创建初始版。
-    - 如果 `.cursor/rules/project-map-summary.mdc` 缺失，**必须立即创建**，填入基于当前项目的结构简图。
-4.  **AI 确认理解 (AI Confirms Understanding)**: 我会向您复述我对项目目标的理解（转述问题），并等待您的确认。
-5.  **启动第一个任务 (Initiate First Task)**: 确认无误后，由我或您提议，创建第一张任务卡（如 `[TODO]-001-...`），正式进入"阶段 1"。
-
----
-
-## 阶段 1: 任务级交互模式 (Task-Level Interaction Model)
-
-**Trigger (触发时机)**: 当您提出一个**具体的任务需求**时。
-
-**Action (执行动作)**: 遵循以下"**定义-执行-评审**"微观循环：
-
-1.  **下达指令 (Define)**: 您提出一个明确的任务需求。
-    - _示例_: "帮我写一个脚本，读取 PDF 的文本。"
-2.  **复述与计划 (Execute - Plan)**: 我首先复述任务，然后提出我的执行计划（比如将使用哪个库、分为几步）。对于复杂任务，我会先更新或创建对应的`任务卡`。
-    - _示例_: "好的，任务是'读取 PDF 文本'。我计划使用 PyMuPDF 库，分两步：1. 打开文件；2. 逐页读取并打印。"
-3.  **执行操作 (Execute - Act)**: 我执行具体操作（生成代码、修改文件、执行命令等）。
-4.  **评审与迭代 (Review & Iterate)**: 您评审我的执行结果。
-    - **如果满意**: 您可以简单回复"好的"或直接下达下一个指令，微观循环结束。
-    - **如果不满意**: 您提出修改意见，我们从第 1 步或第 2 步重新开始这个微观循环，直到任务完成。
-
-**关于对话次数**: 我们不限制对话次数，而是以"**任务的完成**"作为循环的终点。
+### 🟠 State 3: Maintenance (Refactoring & Fixes)
+**Trigger**: Bug reports, tech debt cleanup, or library upgrades.
+**Protocol**:
+1.  **Diagnosis**: Use `code-maintainer.md` (The Detective).
+2.  **Proposal**: Explain the fix before touching code.
+3.  **Regression Check**: Update test cases.
+4.  **Exit Condition**: Bug fixed AND regression test passed.
 
 ---
 
-## 阶段 2: 框架与记忆管理 (Framework & Memory Management)
+## 🤝 Interaction Protocols
 
-为了确保我始终基于最新的规则与您协作，我们定义以下记忆更新机制：
+### 1. The "Commander's Intent"
+*   **User** provides the *What* and *Why*.
+*   **AI** figures out the *How* (Plan).
+*   **Constraint**: AI must NEVER guess the *Why*. If unclear, ASK.
 
-1.  **自动加载 (Automatic Loading)**:
-    *   **机制**: 得益于 `.cursor/rules` 文件夹，所有 `alwaysApply: true` 的规则（如本文件）都将在我与本项目交互时自动加载。
+### 2. The "Map Integrity" Pact
+*   Any change to file structure -> **Immediate** update to `project-map-summary.mdc`.
+*   No "Hidden Files". If it's code, it must be mapped.
 
-2.  **显式触发更新 (Explicit Trigger)**:
-    *   **Trigger**: 当您修改了 `./.cursor/rules` 文件夹下的任何规则，并通知我时（如说"请更新你的记忆"）。
-    *   **Action**: 我会回答"好的，正在重新加载项目规则..."，并强制刷新我的上下文。
-
-3.  **隐式周期性审查 (Implicit Review)**:
-    *   **Trigger**: 在每个**重大里程碑**（比如一个大的功能模块完成）后。
-    *   **Action**: 我会主动提议："我们已经完成了'XX模块'的开发，这是一个很好的节点。您要不要借此机会回顾或优化一下我们的`协作剧本`或`规则`？"
-
-4.  **文档的生命力 (Living Documents)**: 我们所有的管理文档（心路历程、进度记录、要求）都不是一成不变的。它们应该随着项目的进展和我们理解的加深而不断演进。
-
-_（本规则集可根据我们的合作需要随时更新和迭代）_
+### 3. The "Memory Refresh"
+*   **Trigger**: User says "Refresh Memory" or modifies `.cursor/rules`.
+*   **Action**: AI acknowledges and re-scans the rules folder.

@@ -1,58 +1,45 @@
 ---
-description: 模板维护模式 (Template Maintenance Mode)。仅在维护本脚手架项目本身（_meta, prompts-library）时生效。
-globs: _meta/**, prompts-library/**, generate-project.ps1
+description: Template Maintenance Mode - Activates when modifying the scaffold itself (_meta, prompts-library).
+globs: "_meta/**/*", "prompts-library/**/*", ".cursor/rules/**/*"
 alwaysApply: false
 ---
 
-# 模板维护模式 (Template Maintenance Mode)
+# Template Maintenance Mode (V2.0)
 
-本规则仅在维护 **Cursor 协作模板项目** 自身时生效。
+This rule activates a specialized **"Factory Context"**.
+Use this when you are a **Toolmaker** (maintaining this template), not a **User** (building an app).
 
-**⚠️ 优先级声明**: 在涉及“文档存储位置”和“架构定义”时，若与 `01-project-rules.mdc` 冲突，**以本规则为准**。
+## 🚀 Activation Triggers
+*   **Explicit**: User says "Maintenance Mode", "Update Template", or "Refactor Rules".
+*   **Implicit**: User edits files in `_meta/`, `prompts-library/`, or `.cursor/rules/`.
 
-## 🚀 触发场景 (Triggers)
-*   **Trigger**: 当用户修改 `_meta/`、`prompts-library/` 目录下的内容，或明确表示在维护“模板本身”、“元数据”时。
-*   **Trigger**: 当用户想要**基于本母版创建新项目** (Project Incubation) 时。
-*   **Action**: 启用本规则定义的路径规范和行为模式。
+## ⚙️ Protocol Overrides
+<rule_override>
+  <target>01-project-rules.mdc</target>
+  <logic>
+    IF current_context is "Template Maintenance":
+    1.  **Documentation Storage**:
+        - Factory Docs -> `_meta/docs/` (NOT `docs/`)
+        - Delivery Docs -> `prompts-library/guides/`
+    2.  **Map Authority**:
+        - Truth -> `_meta/docs/模板项目地图.md`
+        - Sample -> `docs/项目导航地图.md` (Treat as read-only sample)
+  </logic>
+</rule_override>
 
-## 📏 核心差异规则 (Differential Rules)
+## 🧠 Mental Model (The Factory Owner)
+1.  **Meta-Thinking**: You are not building a feature; you are building *the capability to build features*.
+2.  **Isolation**: Never leak `_meta` tools into the generated project.
+3.  **Pattern Extraction**: When you see good code, think: "How can I generalize this into a template in `prompts-library`?"
 
-### 1. 文档存储 (Documentation Storage)
-*   **通用规则**: `01-project-rules.mdc` 规定文档存放在 `docs/`。
-*   **本模式规则**: 
-    *   **工厂运维文档 (Factory Docs)**: 必须存放在 `_meta/docs/`。
-    *   **用户交付文档 (Delivery Docs)**: 存放在 `prompts-library/guides/`。
-    *   **示例/演示文档 (Demo Docs)**: 存放在 `docs/`。
+## 🔄 Workflows
 
-### 2. 地图权威性 (Map Authority)
-*   **`_meta/docs/模板项目地图.md`**: 这是**本项目的唯一真理** (工厂结构)。
-*   **`docs/项目导航地图.md`**: 这是**演示样例** (模特)。严禁依据此文件修改模板架构。
+### Workflow A: Rule Update
+1.  **Edit**: Modify `.cursor/rules/*.mdc`.
+2.  **Validate**: Run `_meta/prompts/ops/rule-checker.md` (mentally or actual).
+3.  **Version**: Update the version number in the file header.
 
-### 3. 角色与提示词管理
-*   **元角色**: `_meta/prompts/ops/` (工厂工人)。
-*   **交付角色**: `prompts-library/templates/capabilities/` (商品)。
-
-## 🧠 认知映射 (Cognitive Mapping)
-*   **思考**: "我是 Factory (制造者) 还是 Product (使用者)？"
-*   **全局视角**: 审查全链路影响 (创建 -> 实例化 -> 提取)。
-*   **追加原则**: 列表型文档默认在末尾追加。
-
-## 🔄 新项目孵化流程 (Project Incubation Protocol)
-
-当用户要求创建新项目时，必须执行以下 **“模式匹配与组装”** 流程：
-
-1.  **模式扫描 (Pattern Scan)**:
-    *   扫描 `prompts-library/templates/patterns/`。
-    *   **Hit**: 若现有 Pattern (如 Streamlit) 完全匹配需求，直接使用。
-    *   **Gap**: 若现有 Pattern 无法覆盖 (如 Vue+FastAPI)，**启动动态组装**。
-
-2.  **动态组装 (Dynamic Assembly)**:
-    *   扫描 `prompts-library/templates/capabilities/` 中的原子能力。
-    *   将原子能力与业务场景拼接，生成一个**临时的团队配置 (Draft Pattern)**。
-
-3.  **实例化 (Instantiation)**:
-    *   调用 `generate-project.ps1` 生成项目。
-    *   **关键动作**: 将选定或组装好的 Pattern 注入到新项目的 `.cursor/rules/` 中。
-
-4.  **闭环 (Feedback Loop)**:
-    *   提示用户：在新项目成熟后，使用 `PromptExtractor` 提取通用 Pattern 并反哺母版。
+### Workflow B: New Capability
+1.  **Draft**: Create `prompts-library/templates/capabilities/[domain]/[role].md`.
+2.  **Standardize**: Ensure it follows the **Prometheus Prompt Standard** (XML + CoT).
+3.  **Register**: Update `virtual-streamlit-team.mdc` to include the new role (if applicable).

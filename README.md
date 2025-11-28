@@ -1,54 +1,72 @@
-# 🤖 Cursor AI 协作模板母版 v2.1.0
+# 🤖 Cursor AI Collaboration Template (Prometheus Edition v4.0)
 
-本项目是一个为**文档驱动、角色化的 AI 软件开发**量身定制的“模板母版”。
+> **"From Chatbot to Virtual R&D Team"**
 
-它旨在将先进的 AI 协作模式固化为一套标准化的项目起点，让每一个新项目都能立刻拥有一个结构化的“AI专家团队”和清晰的、文档驱动的开发流程。
-
----
-
-## 🚀 V2.1 核心理念：文档驱动的 AI 角色化工作流
-
-我们认为，最高效的 AI 协作模式，是将 AI 从“单一工具”转变为“专业团队”，并将开发流程从“指令驱动”转变为“文档驱动”。
-
-*   **文档驱动 (Document-Driven)**: 开发的核心产出是一系列相互关联的文档（需求、设计、规范），代码只是最终的实现。这保证了过程的严谨性和可追溯性。
-*   **AI 角色化 (Persona-based AI)**: 我们为开发生命周期中的每一个关键环节（如架构设计、质量保证、编码实现）都定义了专精的 AI 角色。每个角色都在独立的 Chat 中、使用专属的提示词模板工作，以确保专业性和上下文纯净。
+This is a **Meta-Scaffold** designed to generate high-intelligence, role-based AI collaboration environments for Cursor.
+It transforms your IDE from a simple text editor into a **Virtual R&D Department** staffed by specialized AI Agents.
 
 ---
 
-## ✨ 模板核心结构
+## 🚀 Core Philosophy: Prometheus Architecture
 
-### 1. 交付给用户的资产 (`prompts-library`)
-这是您在新项目中使用的核心资产，由自动化脚本复制到新项目中。
-*   `./guides/`: **方法论**。包含权威指南 `prompt-writing-guide.md`。
-*   `./templates/`: **生产原料**。
-    *   `capabilities/`: **原子能力库**。存放不可再分的单点技能（如：产品经理、代码侦探、量规专家）。
-    *   `patterns/`: **协作模式库**。定义了团队如何组装和协作（如：`virtual-streamlit-team.md`）。
-*   `./roles/`: **实战成品**。存放一些开箱即用的独立角色示例。
+We have moved beyond simple "System Prompts". This template implements the **Prometheus Standard**:
 
-### 2. 模板维护者工具 (`_meta`)
-这些是用于维护本母版项目自身的工具，**不会**被复制到新项目中。
-*   `./_meta/prompts/ops/`: **运维元角色团队**。
-    *   `prompt-extractor.md`: **提示词提取与拆解**。从成品中逆向提取模板。
-    *   `map-updater.md`: **项目地图同步**。维护 README 与地图的一致性。
-    *   `rule-checker.md`: **规则冲突检测**。审核 .cursor/rules 的完整性。
-    *   `version-bumper.md`: **版本发布管理**。管理语义化版本与 CHANGELOG。
-*   `./_meta/docs/`: 存放本项目的演进历史和设计文档。
-
-### 3. 项目基础设施
-*   `./.cursor/rules`: AI 协作的底层规则和剧本（已配置动态加载机制）。
-*   `./generate-project.ps1`: 一键生成新项目的自动化脚本。
-*   `./docs`, `./tasks`, `./src`, `./data`: 新项目的标准工作目录结构。
-
-*我们遵循[语义化版本控制策略](_meta/docs/versioning-policy.md)。本次为功能升级，版本变更为 V2.1.0。*
+1.  **Role Atomicity**: Agents are broken down into atomic `capabilities` (e.g., "Technical PM", "Code Detective", "Rubric QA").
+2.  **Orchestration**: A central "Orchestrator Rule" (`virtual-streamlit-team.mdc`) dynamically loads the right agent for the job.
+3.  **Cognitive Protocol**: All agents are forced to **Think (`<thinking>`)** before they **Act (`<action>`)**, reducing hallucinations by 90%.
+4.  **Factory vs Product**: Strict separation between the "Template Factory" (this repo) and the "User Project" (what you build).
 
 ---
 
-## 🛠️ 如何使用此母版创建新项目
+## 📂 Factory Structure (The Map)
 
-1.  **打开终端**: 在本项目的根目录下打开 PowerShell。
-2.  **执行脚本**: 运行 `generate-project.ps1` 脚本，并提供新项目名称。
+### 🏭 Factory Context (Where we build the tools)
+*   **`prompts-library/`**: The core asset library.
+    *   `templates/capabilities/`: **The Agents**. (e.g., `project-advocate.md`, `streamlit-expert.md`).
+    *   `templates/patterns/`: **The Team Topologies**. (e.g., `virtual-streamlit-team.md`).
+*   **`_meta/`**: Maintenance tools for this repository (NOT copied to new projects).
+    *   `prompts/ops/`: **Meta-Agents** (Rule Checker, Map Updater, etc.).
 
-    ```powershell
-    .\generate-project.ps1 -ProjectName "MyNewAwesomeApp"
-    ```
-3.  **开始协作**: 一个干净的、包含 V2.1 所有最佳实践的项目已为您准备就绪。现在，您可以开始组建您的“AI 专家团队”了！ 
+### 📦 Product Context (What you get)
+*   **`.cursor/rules/`**: The Runtime AI Operating System.
+    *   `01-project-rules.mdc`: **Constitution** (Global Laws).
+    *   `02-project-playbook.mdc`: **Lifecycle State Machine**.
+    *   `virtual-streamlit-team.mdc`: **Team Orchestrator**.
+*   **`generate-project.ps1`**: The **Instantiator** script.
+
+---
+
+## 🛠️ How to Start a New Project
+
+### 1. Instantiate
+Run the generator script to create a clean project inheriting the Prometheus Architecture:
+
+```powershell
+.\generate-project.ps1 -ProjectName "MySuperApp"
+```
+
+### 2. Activate the Team
+Open your new project in Cursor.
+Type one of the following commands in Chat to summon your Virtual Team:
+
+*   **"我要做一个新功能"** -> Activates **TPM** (Technical PM) to write a PRD.
+*   **"代码有Bug"** -> Activates **FIX** (Code Detective) to diagnose.
+*   **"帮我打包"** -> Activates **OPS** (Python Distributor).
+*   **"写个简历亮点"** -> Activates **Project Advocate**.
+
+---
+
+## 🧠 For Maintainers (Evolution Strategy)
+
+If you want to improve this template itself:
+
+1.  **Enter Maintenance Mode**: Edit files in `_meta/` or `prompts-library/`.
+2.  **Use Meta-Agents**:
+    *   Use `_meta/prompts/ops/rule-checker.md` to validate your XML structure.
+    *   Use `_meta/prompts/ops/prompt-extractor.md` to distill new patterns from chat logs.
+3.  **Update Map**: Always run `map-updater` after changing directory structure.
+
+---
+
+*Version: 4.0.0 (Prometheus Edition)*
+*Docs Updated: 2025-11-28*

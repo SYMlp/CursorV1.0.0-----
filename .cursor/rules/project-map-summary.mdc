@@ -1,29 +1,35 @@
 ---
-description: 模板项目全局结构简图 (Mini-Map)。提供本模板工厂的核心目录职责指引。
-globs: **/*
+description: Project Mini-Map - High-level directory structure and architectural topology.
+globs: "**/*"
 alwaysApply: true
 ---
-# 🗺️ 模板项目全局简图 (Mini-Map)
 
-## 🚀 触发场景 (Triggers)
-*   **Trigger 1**: 当用户询问 "**项目结构**"、"**某文件在哪里**" 或 "**这是做什么的**" 时。
-*   **Trigger 2**: 当你准备进行 **架构变更** 或 **添加新模块** 时。
-*   **Action**: 必须优先查阅本简图，或读取 `read_file _meta/docs/模板项目地图.md` 获取详细拓扑。
+# 🗺️ Project Mini-Map (Dynamic)
 
-## 核心结构
-- `prompts-library/`: **核心资产** (交付给用户的 Prompt 模板)
-  - `templates/capabilities/`: **原子能力**
-  - `templates/patterns/`: **协作模式** (如虚拟团队)
-- `_meta/`: **维护工具** (工厂自身的运维工具，**不**复制到新项目)
-  - `prompts/ops/`: **运维元角色** (MapUpdater, PromptExtractor, RuleChecker, VersionBumper)
-- `.cursor/rules/`: **运行时** (AI 行为准则)
-- `tasks/`: **任务追踪** (工作流状态记录)
-- `generate-project.ps1`: **启动器** (新项目生成脚本)
+**Context**: This file provides the **High-Level Topology** for the AI.
+**Update Frequency**: Must be updated whenever the directory structure changes.
 
-## 关键文档指引
-- 详细架构与数据流: 📜 `read_file _meta/docs/模板项目地图.md`
-- 版本控制策略: 📜 `read_file _meta/docs/versioning-policy.md`
+## 📂 Core Structure
 
-## 核心原则
-- **隔离原则**: `_meta` 目录下的工具仅用于维护本模板项目，严禁混入用户的新项目中。
-- **结构化交付**: 所有能力必须原子化封装在 `capabilities` 中，通过 `patterns` 进行组装。
+```text
+d:\Coding\Cursor协作模板v1.0.2\
+├── _meta/                  # [FACTORY] Maintenance tools & docs (Do NOT copy to new projects)
+│   ├── docs/               # Architecture decisions for the template itself
+│   └── prompts/ops/        # Meta-Agents (Rule Checker, Version Bumper)
+├── prompts-library/        # [ASSETS] The "Product" being delivered
+│   ├── templates/
+│   │   ├── capabilities/   # Atomic Roles (TPM, DEV, QA...)
+│   │   └── patterns/       # Team Orchestrations (Streamlit Team...)
+├── .cursor/rules/          # [RUNTIME] Active AI Instructions
+├── docs/                   # [SAMPLE] Documentation for the *instantiated* project
+└── tasks/                  # [TRACKING] Work management
+```
+
+## 🔗 Key References
+*   **Detailed Architecture**: `_meta/docs/模板项目地图.md` (The Truth)
+*   **Versioning Policy**: `_meta/docs/versioning-policy.md`
+
+## 🧭 Navigation Principles
+1.  **Factory vs Product**: `_meta` is the factory; `prompts-library` is the product.
+2.  **Atomic Design**: Capabilities are small; Patterns assemble them.
+3.  **Rule Hierarchy**: `01-project-rules` > `02-project-playbook` > Specific Pattern Rules.

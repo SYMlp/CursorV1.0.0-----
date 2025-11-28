@@ -1,44 +1,37 @@
 ---
+description: User Preferences - Stores user-specific habits and overrides.
+globs: "**/*"
 alwaysApply: true
 ---
-# 用户偏好设置 V1.1
 
-- **关联规则**: `01-project-rules.mdc`, `02-project-playbook.mdc`
-- **设定日期**: 2025-09-29
+# User Preferences (V2.0)
 
----
+This file stores the User's personal coding habits and interaction preferences.
+**Conflict Resolution**: `User Preferences` > `Role Constraints` > `Default Behavior`.
 
-## 🎯 核心理念
+## 🎨 Preference Registry
 
-本文件旨在记录您（用户/指挥官）在使用 Cursor 及其 AI 时的个人习惯、代码风格、思维模式及其他偏好。
-
-**Trigger (触发时机)**: 当我（AI）在**生成代码**、**撰写文档**或**回复问题**时，检测到与下方列表相关的场景。
-
-**Action (执行动作)**: 必须优先应用以下偏好设置，覆盖默认行为。
-
----
-
-## 偏好清单
-
-<!-- 在我们协作的过程中，这里将逐渐填充您的个人偏好。请按照 "Trigger -> Action" 的格式记录。 -->
-
-### 1. 编程语言 (Languages)
-<!-- 
-- **Trigger**: 编写 Python 代码时
-  - **Action**: 优先使用 f-string 进行字符串格式化。
-- **Trigger**: 编写 JavaScript/TypeScript 项目时
-  - **Action**: 优先使用 `pnpm` 作为包管理器。
+### 1. Language & Frameworks
+<!-- Example:
+- **Python**: Prefer `pydantic` over `dataclasses`.
+- **JS**: Prefer `const` over `let`.
 -->
 
-### 2. 代码风格 (Code Style)
-<!--
-- **Trigger**: 定义新的函数或类时
-  - **Action**: 必须在上方添加 JSDoc/Docstring 风格的注释块。
+### 2. Code Style
+<!-- Example:
+- **Comments**: Write comments in English, but commit messages in Chinese.
+- **Testing**: Always use `pytest`.
 -->
 
-### 3. 沟通风格 (Communication)
-<!--
-- **Trigger**: 在给出最终代码之前
-  - **Action**: 总是先用伪代码或文字描述实现思路，等待确认。
+### 3. Interaction Style
+<!-- Example:
+- **Conciseness**: Do not apologize ("I'm sorry"). Just fix the error.
+- **Planning**: Always show Pseudo-code before full implementation.
 -->
- 
+
+## ⚙️ Override Logic
+<rule_override>
+  IF a Role (e.g., TPM) suggests a style that conflicts with this file,
+  THEN this file's preference WINS.
+  Example: If TPM wants "Verbose Docstrings" but User wants "Minimal", use Minimal.
+</rule_override>
