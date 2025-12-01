@@ -4,7 +4,7 @@ globs: "**/*"
 alwaysApply: true
 ---
 
-# Project Collaboration Playbook (V4.0 - Prometheus Edition)
+# Project Collaboration Playbook (V4.1 - Prometheus Edition)
 
 This document defines the **Project Lifecycle State Machine**.
 The AI must explicitly identify the current state and execute the corresponding protocol.
@@ -33,8 +33,17 @@ The AI must explicitly identify the current state and execute the corresponding 
 **Protocol**:
 1.  **Diagnosis**: Use `code-maintainer.md` (The Detective).
 2.  **Proposal**: Explain the fix before touching code.
-3.  **Regression Check**: Update test cases.
-4.  **Exit Condition**: Bug fixed AND regression test passed.
+3.  **Fix Execution**: Apply the patch.
+4.  **Regression Check**: Update test cases.
+5.  **Learning Record**: Create `docs/learnings/YYYY-MM-DD-Fix-Name.md` documenting the root cause (as per Evolution Protocol).
+6.  **Exit Condition**: Bug fixed AND documented.
+
+### 🟣 State 4: Handover (Archival & Evolution)
+**Trigger**: Project completion or Milestone delivery.
+**Protocol**:
+1.  **Wisdom Harvest**: Identify high-value `docs/learnings/` and Custom Prompts.
+2.  **Packaging**: Zip or move these assets to the Template Project's `_meta/wisdom-inbox/`.
+3.  **Cleanup**: Remove temp files.
 
 ---
 

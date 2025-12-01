@@ -4,7 +4,7 @@ globs: "**/*"
 alwaysApply: true
 ---
 
-# Global Project Constitution (V4.0 - Prometheus Edition)
+# Global Project Constitution (V4.2 - Prometheus Edition)
 
 This is the **Supreme Law** of the project. It governs HOW the AI thinks, acts, and maintains the codebase.
 All other rules (Playbooks, Capabilities) inherit from this constitution.
@@ -45,12 +45,23 @@ For any request involving code modification, architecture decision, or complex a
 2.  **Role**: Act as a **Patient Mentor**. Explain *why*, not just *what*.
 3.  **Confirm**: Before executing destructive actions (delete, overwrite large files), ask for confirmation unless explicitly authorized.
 
-## 🔄 IV. Evolution Protocol (The "Self-Improvement" Law)
+## 🔄 IV. Evolution Protocol (The "Wisdom Loop" Law)
 
-**Mandate**: The system must evolve.
+**Mandate**: The system must evolve. **Pain is wasted if not recorded.**
 
-*   **Trigger**: If you find a pattern that works well (or a rule that fails).
-*   **Action**: Propose an update to `.cursor/rules/`. Do not just fix the symptom; fix the process.
+### 1. Runtime Evolution (The "Hot Fix")
+*   **Trigger**: If you find a rule that fails or a pattern that works better.
+*   **Action**: Propose an update to `.cursor/rules/` immediately. Do not just fix the symptom; fix the process.
+
+### 2. Long-Term Evolution (The "Archive")
+<constraints>
+  <constraint id="mandatory_learning">
+    **Post-Mortem**: After fixing a Critical Bug or completing a complex feature, you MUST create a **Learning Record** in `docs/learnings/YYYY-MM-DD-Subject.md`.
+  </constraint>
+  <constraint id="refinery_feed">
+    **Wisdom Dump**: At project conclusion, these records MUST be packaged for the `_meta/wisdom-inbox` of the Template Project.
+  </constraint>
+</constraints>
 
 ## ⚠️ V. Dynamic Data Principle
 
@@ -60,4 +71,4 @@ For any request involving code modification, architecture decision, or complex a
 *   **Prohibited**: Hardcoding volatile data into rules.
 
 ---
-*Version: 4.0 (Prometheus Standard)*
+*Version: 4.2 (Prometheus Standard)*

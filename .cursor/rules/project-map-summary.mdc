@@ -13,23 +13,28 @@ alwaysApply: true
 
 ```text
 d:\Coding\Cursor协作模板v1.0.2\
-├── _meta/                  # [FACTORY] Maintenance tools & docs (Do NOT copy to new projects)
+├── _meta/                  # [FACTORY] The Template Factory (Dev only)
 │   ├── docs/               # Architecture decisions for the template itself
-│   └── prompts/ops/        # Meta-Agents (Rule Checker, Version Bumper)
-├── prompts-library/        # [ASSETS] The "Product" being delivered
+│   ├── prompts/            # Internal Agents (Prometheus, Rule Checker...)
+│   └── wisdom-inbox/       # [LEARNING] Repository for architectural insights & bugs
+├── prompts-library/        # [ASSETS] The "Product" copied to new projects
 │   ├── templates/
 │   │   ├── capabilities/   # Atomic Roles (TPM, DEV, QA...)
 │   │   └── patterns/       # Team Orchestrations (Streamlit Team...)
-├── .cursor/rules/          # [RUNTIME] Active AI Instructions
-├── docs/                   # [SAMPLE] Documentation for the *instantiated* project
-└── tasks/                  # [TRACKING] Work management
+├── .cursor/rules/          # [RUNTIME] Active AI Instructions (Context Hooks)
+├── docs/                   # [SAMPLE] Placeholder for instantiated project docs
+└── tasks/                  # [TRACKING] Placeholder for work management
 ```
 
 ## 🔗 Key References
-*   **Detailed Architecture**: `_meta/docs/模板项目地图.md` (The Truth)
+*   **Detailed Architecture**: `_meta/docs/模板项目地图.md` (The Source of Truth)
 *   **Versioning Policy**: `_meta/docs/versioning-policy.md`
 
 ## 🧭 Navigation Principles
-1.  **Factory vs Product**: `_meta` is the factory; `prompts-library` is the product.
-2.  **Atomic Design**: Capabilities are small; Patterns assemble them.
-3.  **Rule Hierarchy**: `01-project-rules` > `02-project-playbook` > Specific Pattern Rules.
+1.  **Factory vs Product**: 
+    *   `_meta/` is **Infrastructure**. Never copy to new projects (except specific injections).
+    *   `prompts-library/` is **Inventory**. This is what users get.
+2.  **Map Authority**: 
+    *   If you add a file/folder, you **MUST** update this file immediately.
+    *   Update `_meta/docs/模板项目地图.md` for detailed topological changes.
+3.  **Atomic Design**: Capabilities are small; Patterns assemble them; Rules trigger them.
