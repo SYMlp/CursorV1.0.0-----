@@ -1,4 +1,4 @@
-# 🤖 Cursor AI Collaboration Template (Prometheus Edition v4.0)
+# 🤖 Cursor AI Collaboration Template (Prometheus Edition v4.1)
 
 > **"From Chatbot to Virtual R&D Team"**
 
@@ -25,13 +25,14 @@ We have moved beyond simple "System Prompts". This template implements the **Pro
     *   `templates/capabilities/`: **The Agents**. (e.g., `project-advocate.md`, `streamlit-expert.md`).
     *   `templates/patterns/`: **The Team Topologies**. (e.g., `virtual-streamlit-team.md`).
 *   **`_meta/`**: Maintenance tools for this repository (NOT copied to new projects).
-    *   `prompts/ops/`: **Meta-Agents** (Rule Checker, Map Updater, etc.).
+    *   `prompts/ops/`: **Meta-Agents** (Project Incubator, Rule Checker, Map Updater, etc.).
 
 ### 📦 Product Context (What you get)
 *   **`.cursor/rules/`**: The Runtime AI Operating System.
     *   `01-project-rules.mdc`: **Constitution** (Global Laws).
     *   `02-project-playbook.mdc`: **Lifecycle State Machine**.
-    *   `virtual-streamlit-team.mdc`: **Team Orchestrator**.
+    *   `virtual-streamlit-team.mdc`: **Team Orchestrator** (Streamlit Dev).
+    *   `strategic-research-team.mdc`: **Research Orchestrator** (Analysis).
 *   **`generate-project.ps1`**: The **Instantiator** script.
 
 ---
@@ -39,11 +40,20 @@ We have moved beyond simple "System Prompts". This template implements the **Pro
 ## 🛠️ How to Start a New Project
 
 ### 1. Instantiate
-Run the generator script to create a clean project inheriting the Prometheus Architecture:
+Run the generator script to create a clean project inheriting the Prometheus Architecture.
 
+**Option A: Standard (All Teams)**
+Creates a project with both Streamlit Development and Strategic Research capabilities.
 ```powershell
 .\generate-project.ps1 -ProjectName "MySuperApp"
 ```
+
+**Option B: Specialized (Specific Teams)**
+Choose only the teams you need (e.g., only Strategic Research, no coding).
+```powershell
+.\generate-project.ps1 -ProjectName "PureResearch" -Teams "SRA"
+```
+*Available Teams: `Streamlit`, `SRA`*
 
 ### 2. Activate the Team
 Open your new project in Cursor.
@@ -51,8 +61,8 @@ Type one of the following commands in Chat to summon your Virtual Team:
 
 *   **"我要做一个新功能"** -> Activates **TPM** (Technical PM) to write a PRD.
 *   **"代码有Bug"** -> Activates **FIX** (Code Detective) to diagnose.
+*   **"战略研判"** -> Activates **SRA** (Strategic Research Council) to analyze feasibility.
 *   **"帮我打包"** -> Activates **OPS** (Python Distributor).
-*   **"写个简历亮点"** -> Activates **Project Advocate**.
 
 ---
 
@@ -68,5 +78,5 @@ If you want to improve this template itself:
 
 ---
 
-*Version: 4.0.0 (Prometheus Edition)*
-*Docs Updated: 2025-11-28*
+*Version: 4.1.0 (Prometheus Edition)*
+*Docs Updated: 2025-12-01*

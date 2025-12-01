@@ -16,8 +16,19 @@
 .PARAMETER DestinationPath
     可选。指定新项目创建的路径。默认为当前模板目录的上一级。
 
+.PARAMETER Teams
+    可选。指定要启用的团队规则（Team Rules）。
+    可选值: 'All' (默认), 'Streamlit', 'SRA' (Strategic Research)。
+    支持多选，用逗号分隔，例如 "Streamlit,SRA"。
+    如果指定了特定团队，未选中的团队规则将被删除。
+
 .EXAMPLE
     .\generate-project.ps1 -ProjectName "MyNewWebApp"
+    # 默认包含所有团队
+
+.EXAMPLE
+    .\generate-project.ps1 -ProjectName "PureResearch" -Teams "SRA"
+    # 仅启用战略研究团队，不包含 Streamlit 开发团队
 #>
 [CmdletBinding()]
 param(
@@ -25,7 +36,10 @@ param(
     [string]$ProjectName,
 
     [Parameter(Mandatory=$false)]
-    [string]$DestinationPath = ".."
+    [string]$DestinationPath = "..",
+
+    [Parameter(Mandatory=$false)]
+    [string]$Teams = "All"
 )
 
 try {
@@ -45,6 +59,7 @@ try {
 
     Write-Host "模板母版路径: $templatePath"
     Write-Host "新项目路径: $newProjectPath"
+    Write-Host "启用团队: $Teams"
     Write-Host "开始创建新项目 '$ProjectName'..."
 
     # 定义需要排除的文件和目录列表 (这些是模板自身的维护工具，不应带入新项目)
@@ -85,6 +100,73 @@ try {
             Write-Host "已移除母版专用规则: $ruleFile" -ForegroundColor Gray
         }
     }
+
+    # --- 团队规则 (Team Rules) 选择逻辑 ---
+    # 定义团队与规则文件的映射
+    $teamMap = @{
+        "Streamlit" = ".cursor/rules/virtual-streamlit-team.mdc"
+        "SRA"       = ".cursor/rules/strategic-research-team.mdc"
+    }
+
+    if ($Teams -ne "All") {
+        $selectedTeams = $Teams -split "," | ForEach-Object { $_.Trim() }
+        
+        foreach ($teamKey in $teamMap.Keys) {
+            if ($teamKey -notin $selectedTeams) {
+                # 如果该团队未被选中，删除对应的规则文件
+                $ruleFile = $teamMap[$teamKey]
+                $fullPath = Join-Path -Path $newProjectPath -ChildPath $ruleFile
+                if (Test-Path $fullPath) {
+                    Remove-Item -Path $fullPath -Force
+                    Write-Host "已移除未选团队规则 ($teamKey): $ruleFile" -ForegroundColor Yellow
+                }
+            } else {
+                Write-Host "已保留团队规则 ($teamKey)" -ForegroundColor Green
+            }
+        }
+    } else {
+        Write-Host "保留所有默认团队规则 (Streamlit, SRA)" -ForegroundColor Green
+    }
+
+
+    # --- 新增: 生成干净的 project-map-summary.mdc ---
+    # 母版的 map 包含 _meta 等信息，不适合新项目。
+    # 我们需要为新项目注入一个“空壳”地图规则，以便 AI 后续维护。
+    
+    $newMapContent = @"
+---
+description: Project Mini-Map - High-level directory structure and architectural topology.
+globs: "**/*"
+alwaysApply: true
+---
+
+# 🗺️ Project Mini-Map (Dynamic)
+
+**Context**: This file provides the **High-Level Topology** for the AI.
+**Update Frequency**: Must be updated whenever the directory structure changes.
+
+## 📂 Core Structure
+
+\`\`\`text
+$ProjectName/
+├── prompts-library/        # [ASSETS] The Intelligence Core
+├── .cursor/rules/          # [RUNTIME] Active AI Instructions
+├── docs/                   # [DOCS] Project documentation
+└── tasks/                  # [TRACKING] Work management
+\`\`\`
+
+## 🔗 Key References
+*   **Detailed Architecture**: \`docs/project-map.md\` (The Truth)
+
+## 🧭 Navigation Principles
+1.  **Map Integrity**: Any change to file structure -> **Immediate** update to this file.
+2.  **Rule Hierarchy**: \`01-project-rules\` > \`02-project-playbook\` > Specific Pattern Rules.
+"@
+
+    $newMapPath = Join-Path -Path $newProjectPath -ChildPath ".cursor/rules/project-map-summary.mdc"
+    Set-Content -Path $newMapPath -Value $newMapContent -Encoding UTF8
+    Write-Host "已生成新项目专用地图规则: .cursor/rules/project-map-summary.mdc" -ForegroundColor Cyan
+
 
     Write-Host ""
     Write-Host "✅ 新项目 '$ProjectName' 创建成功！" -ForegroundColor Green
